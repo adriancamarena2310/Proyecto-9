@@ -12,4 +12,7 @@ export class PropertiesPagaComponent implements OnInit {
   ngOnInit() {
   }
 
+  onFieldUpdated(field: string,value:string){
+    console.log({field,value})
+  }
 }
