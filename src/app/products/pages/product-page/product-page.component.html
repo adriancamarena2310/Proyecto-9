@@ -18,7 +18,8 @@
 <div class="col-auto">
   <span customLabel
    [color]="color"
-   ></span>
+   [errors]="myForm.get('name')?.errors">
+   no hay erroes</span>
 </div>
 
 <div class="row mt-2">
