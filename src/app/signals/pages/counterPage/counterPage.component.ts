@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, computed, signal } from '@angular/core';
 
 @Component({
   selector: 'app-counterPage',
@@ -12,4 +12,12 @@ export class CounterPageComponent implements OnInit {
   ngOnInit() {
   }
 
+  public counter = signal(10);
+  public squareCounter = computed( () => this.counter() * this.counter() );
+
+
+  increaseBy( value: number ) {
+
+    this.counter.update( current => current + value );
+  }
 }
