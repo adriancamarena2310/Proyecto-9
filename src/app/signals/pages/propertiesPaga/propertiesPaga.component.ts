@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, computed, effect, signal } from '@angular/core';
 import { User } from '../../interfaces/user-request.interface';
 
 @Component({
@@ -6,12 +6,20 @@ import { User } from '../../interfaces/user-request.interface';
   templateUrl: './propertiesPaga.component.html',
   styleUrls: ['./propertiesPaga.component.css']
 })
-export class PropertiesPagaComponent implements OnInit {
+export class PropertiesPagaComponent implements OnDestroy,OnInit {
+  ngOnInit(): void {
+    setInterval( () => {
+      this.counter.update( current => current + 1 );
 
-  constructor() { }
-
-  ngOnInit() {
+      // if ( this.counter() == 15 )
+      //   this.userChangedEffect.destroy();
+    }, 1000 );
   }
+
+  ngOnDestroy(): void {
+    // this.userChangedEffect.destroy();
+  }
+  public counter = signal( 10 );
 
 
   public user = signal<User>( {
@@ -66,4 +74,14 @@ export class PropertiesPagaComponent implements OnInit {
 
 
   }
+
+  increaseBy( value: number ) {
+    this.counter.update( current => current + value );
+  }
+
+  public fullName = computed( () => `${ this.user().first_name } ${ this.user().last_name }` );
+  public userChangedEffect = effect( () => {
+    // Todo: Descomentar esta línea
+    console.log( `${ this.user().first_name } - ${ this.counter() } ` );
+  } );
 }
